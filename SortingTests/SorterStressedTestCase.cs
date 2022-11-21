@@ -5,17 +5,23 @@ namespace Sorting {
 internal class SorterStressedTestCase : SorterTestCase {
     [Test]
     public override void TestSelectionSorterInt() {
-        foreach (var size in _arraySizes) {
-            _unsortedArrayInt = GetUnsortedArrayInt(size);
-            TestSorter(new SelectionSorter(), _unsortedArrayInt, size);
-        }
+        TestSorter(new SelectionSorter());
     }
 
     [Test]
     public override void TestBubbleSorter() {
+        TestSorter(new BubbleSorter());
+    }
+
+    [Test]
+    public override void TestInsertionSorter() {
+        TestSorter(new InsertionSorter());
+    }
+
+    private void TestSorter(ISorter sorter) {
         foreach (var size in _arraySizes) {
             _unsortedArrayInt = GetUnsortedArrayInt(size);
-            TestSorter(new BubbleSorter(), _unsortedArrayInt, size);
+            TestSorter(sorter, _unsortedArrayInt, size);
         }
     }
 }

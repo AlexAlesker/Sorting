@@ -13,9 +13,7 @@ public class SorterTestCase {
 
     [Test]
     public virtual void TestSelectionSorterInt() {
-        var size = _arraySizes[0];
-        _unsortedArrayInt = GetUnsortedArrayInt(size);
-        TestSorter(new SelectionSorter(), _unsortedArrayInt, size);
+        TestSorter(new SelectionSorter());
     }
 
     [Test]
@@ -27,9 +25,18 @@ public class SorterTestCase {
 
     [Test]
     public virtual void TestBubbleSorter() {
+        TestSorter(new BubbleSorter());
+    }
+
+    [Test]
+    public virtual void TestInsertionSorter() {
+        TestSorter(new InsertionSorter());
+    }
+
+    private void TestSorter(ISorter sorter) {
         var size = _arraySizes[0];
         _unsortedArrayInt = GetUnsortedArrayInt(size);
-        TestSorter(new BubbleSorter(), _unsortedArrayInt, size);
+        TestSorter(sorter, _unsortedArrayInt, size);
     }
 
     protected static void TestSorter<T>(ISorter sorter, T[] array, int arraySize) where T : IComparable<T> {
