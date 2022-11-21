@@ -6,35 +6,39 @@ namespace Sorting {
 
 [TestFixture]
 public class SorterTestCase {
-    private int[] _unsortedArrayInt;
+    protected int[] _unsortedArrayInt;
     private double[] _unsortedArrayDouble;
     private static readonly Random Random = new Random();
-    private readonly int[] _arraySizes = { 1000, 10000, 100000 };
+    protected readonly int[] _arraySizes = { 1000, 10000, 100000 };
 
     [Test]
-    public void TestSelectionSorterInt() {
-        foreach (var size in _arraySizes) {
-            _unsortedArrayInt = GetUnsortedArrayInt(size);
-            TestSorter(new SelectionSorter(), _unsortedArrayInt, size);
-        }
-        
+    public virtual void TestSelectionSorterInt() {
+        var size = _arraySizes[0];
+        _unsortedArrayInt = GetUnsortedArrayInt(size);
+        TestSorter(new SelectionSorter(), _unsortedArrayInt, size);
     }
 
     [Test]
     public void TestSelectionSorterDouble() {
-        foreach (var size in _arraySizes) {
-            _unsortedArrayDouble = GetUnsortedArrayDouble(size);
-            TestSorter(new SelectionSorter(), _unsortedArrayDouble, size);
-        }
+        var size = _arraySizes[0];
+        _unsortedArrayDouble = GetUnsortedArrayDouble(size);
+        TestSorter(new SelectionSorter(), _unsortedArrayDouble, size);
     }
 
-    private static void TestSorter<T>(ISorter sorter, T[] array, int arraySize) where T : IComparable<T> {
+    [Test]
+    public virtual void TestBubbleSorter() {
+        var size = _arraySizes[0];
+        _unsortedArrayInt = GetUnsortedArrayInt(size);
+        TestSorter(new BubbleSorter(), _unsortedArrayInt, size);
+    }
+
+    protected static void TestSorter<T>(ISorter sorter, T[] array, int arraySize) where T : IComparable<T> {
         var sw = new Stopwatch();
         sw.Start();
         sorter.Sort(array);
         sw.Stop();
         Assert.That(IsArraySorted(array, arraySize));
-        TestContext.WriteLine($"{sorter} ({array}) of {arraySize}:");
+        TestContext.WriteLine($"{sorter} ({array}) of {arraySize}; Runs = {sorter.NumberOfRuns}:");
         TestContext.WriteLine($"Time elapsed: {sw.Elapsed}");
     }
 
@@ -48,7 +52,7 @@ public class SorterTestCase {
         return true;
     }
 
-    private static int[] GetUnsortedArrayInt(int arraySize) {
+    protected static int[] GetUnsortedArrayInt(int arraySize) {
         var buffer = new int[arraySize];
 
         for (var i = 0; i < arraySize; i++) {

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SorterStressedTestCase.cs" />
     <Compile Include="SorterTestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

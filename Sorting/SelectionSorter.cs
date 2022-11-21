@@ -10,7 +10,11 @@ public class SelectionSorter : Sorter {
                 Swap(ref items[i], ref items[minIndex]);
             }
         }
+
+        NumberOfRuns = items.Length - 1;
     }
+
+    public override int NumberOfRuns { get; set; }
 
     private static int GetMinIndex<T>(T[] items, int startIndex) where T : IComparable<T> {
         var minIndex = startIndex;
