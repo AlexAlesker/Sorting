@@ -18,6 +18,11 @@ internal class SorterStressedTestCase : SorterTestCase {
         TestSorter(new InsertionSorter());
     }
 
+    [Test]
+    public override void TestQuickSorter() {
+        TestSorter(new QuickSorter());
+    }
+
     private void TestSorter(ISorter sorter) {
         foreach (var size in _arraySizes) {
             _unsortedArrayInt = GetUnsortedArrayInt(size);

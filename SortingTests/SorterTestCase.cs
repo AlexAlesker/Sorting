@@ -33,6 +33,11 @@ public class SorterTestCase {
         TestSorter(new InsertionSorter());
     }
 
+    [Test]
+    public virtual void TestQuickSorter() {
+        TestSorter(new QuickSorter());
+    }
+
     private void TestSorter(ISorter sorter) {
         var size = _arraySizes[0];
         _unsortedArrayInt = GetUnsortedArrayInt(size);
@@ -40,23 +45,15 @@ public class SorterTestCase {
     }
 
     protected static void TestSorter<T>(ISorter sorter, T[] array, int arraySize) where T : IComparable<T> {
+        var arrayToSort = (T[]) array.Clone();
         var sw = new Stopwatch();
         sw.Start();
-        sorter.Sort(array);
+        sorter.Sort(arrayToSort);
         sw.Stop();
-        Assert.That(IsArraySorted(array, arraySize));
-        TestContext.WriteLine($"{sorter} ({array}) of {arraySize}; Runs = {sorter.NumberOfRuns}:");
+        Assert.That(arrayToSort, Is.EquivalentTo(array));
+        Assert.That(arrayToSort, Is.Ordered);
+        TestContext.WriteLine($"{sorter} ({array}) of {arraySize}; Runs: {sorter.NumberOfRuns}");
         TestContext.WriteLine($"Time elapsed: {sw.Elapsed}");
-    }
-
-    private static bool IsArraySorted<T>(T[] array, int arraySize) where T : IComparable<T> {
-        for (var i = 0; i < arraySize - 1; i++) {
-            if (array[i].CompareTo(array[i + 1]) > 0) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     protected static int[] GetUnsortedArrayInt(int arraySize) {
